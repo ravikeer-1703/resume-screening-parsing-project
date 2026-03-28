@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn
+re
+streamlit
+nltk
+PyPDF2
+spacy
+sqlalchemy
