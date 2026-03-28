@@ -67,7 +67,7 @@ if button:
 
     #============================== Calculating cosine similarity ======================================================
 
-    cs_similarity = np.round(cosine_similarity(tf,jd_tf)*100)
+    cs_similarity = np.round(cosine_similarity(tf,jd_tf)*100).astype(float)
     final_df = pd.DataFrame(cs_similarity, columns=["Resume Score"]).sort_values(by = "Resume Score", ascending=False)
     final_df = final_df.reset_index(drop=True)
 
@@ -132,21 +132,31 @@ if button:
 
     #=========================== RESUME PARSING DETAILS ================================================================
     # Details of Candidates extracting from resume add to dataframe name final_df
-    final_df["skills_edu_match_score"] = (skills_match_score * 0.5) + (education_match_score * 0.5)
-    final_df["name"] = df["text"].apply(extracting_name)
-    final_df["phone"] = df["text"].apply(phone_number).str[0].fillna("")
-    final_df["email"] = df["text"].apply(email_id).str[0].fillna("")
-    final_df["work_exp"] = df["text"].apply(extracting_work_exp)
-    final_df["skills"] = df["text"].apply(extract_skills)
-    final_df["education"] = df["text"].apply(extract_education)
+    scores = (skills_match_score * 0.5) + (education_match_score * 0.5)
+    final_score = []
+    for score in scores:
+        if score>99:
+            final_score.append(99)
+        else:
+            final_score.append(score)
+    final_df["skills_edu_match_score"] = final_score
+    final_df["skills_edu_match_score"] = final_df["skills_edu_match_score"].astype(float)
+
+    final_df["name"] = df["text"].apply(extracting_name).astype(str)
+    final_df["phone"] = df["text"].apply(phone_number).str[0].fillna("").astype(str)
+    final_df["email"] = df["text"].apply(email_id).str[0].fillna("").astype(str)
+    final_df["work_exp"] = df["text"].apply(extracting_work_exp).astype(str)
+    final_df["skills"] = df["text"].apply(extract_skills).astype(str)
+    final_df["education"] = df["text"].apply(extract_education).astype(str)
+
 
     st.space()
-    st.dataframe(final_df.head(10))
-
+    st.dataframe(final_df.head(20))
     st.write("Number of Rows: ", final_df.shape[0])
     st.write("Number of Columns: ", final_df.shape[1])
 
 #================================ CONNECTING TO DATABASE ===============================================================
+
     st.markdown("""<style>
         div.stButton > sql_button {
             background-color: #4CAF50;
@@ -157,9 +167,9 @@ if button:
             font-size: 18px;}
         </style>
         """, unsafe_allow_html=True)
-    engine = create_engine('mysql+mysqlconnector://root:ravi%4017031995@localhost/resume_database')
     sql_button = st.button("Data Load to Database", key=2)
     if sql_button:
+        engine = create_engine('mysql+mysqlconnector://root:ravi%4017031995@localhost/resume_database')
         try:
             final_df.to_sql("resume_data", con=engine , if_exists="append", index=False)
             st.success("Data Load to Database Successfully")

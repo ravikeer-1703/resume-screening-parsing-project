@@ -6,6 +6,5 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (Resume_Screening_Parsing_Project)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Spam_Mail_Classifier" />
   </component>
 </module>
