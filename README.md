@@ -1,5 +1,6 @@
 Hello,
 everyone i am Ravi.
+
 Project name: Resume Screening and parsing.
 Short note about this project: This resume screening and parsing is an intelligent web application and it is built by using Python, Streamlit for web UI, and Machine Learning.
 It automates the process of analyzing resumes, extracting candidate information, and ranking candidates based on their relevance to a given job description and skills and education matched with job description.
