@@ -12,7 +12,6 @@ How to use it:
 After all these 3 step it will process the all pdf file and show you a data table in which you can see resume score, skills education match score, candidates name and other details.
 Download all Data as csv file: just hover mouse cursor on table and you will see download sign on head of table on most right side of the table and as you click on this sign table automatically download.
 
-
 Features of this project:
 - Intractive UI built with Streamlit.
 - we can upload multiple pdf file in one time.
@@ -29,6 +28,9 @@ Features of this project:
           - TF-IDF vectorizer, and
           - cosine similarity function
 - it will store parse details in mysql database management system just click on "data load to database"
+
+Reasons why i add skills and education match score function in this model:
+- even though i have add resume score function which is calculates by using cosine_similarity function but i think that if HR looking for best candidates only resume score may not be sufficient. if candidates skills and educations also match as per Job description it will be very helpful for finding right candidates.
 
 Tools and libraries used in this project:
   - Steamlit:  for fronted UI
